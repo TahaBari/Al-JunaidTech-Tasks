@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Inventory - Book Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="page-header">
+            {% if search_term %}
+                <i class="fas fa-search me-2"></i> Search Results for "{{ search_term }}"
+            {% else %}
+                <i class="fas fa-book-open me-2"></i> Book Inventory
+            {% endif %}
+        </h1>
+    </div>
+</div>
+
+{% if books %}
+    <div class="table-responsive">
+        <table class="table table-hover book-table">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Price</th>
+                    <th>Genres</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr id="book-{{ book.isbn }}">
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td class="book-price">${{ "%.2f"|format(book.price) }}</td>
+                    <td>
+                        <div class="book-genres">
+                            {% for genre in book.genres %}
+                                <span class="genre-tag">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Quick price update form -->
+                            <form class="price-update-form d-inline me-1" data-isbn="{{ book.isbn }}">
+                                <div class="input-group input-group-sm">
+                                    <input type="number" id="price-{{ book.isbn }}" 
+                                           class="form-control form-control-sm" 
+                                           step="0.01" min="0" value="{{ "%.2f"|format(book.price) }}"
+                                           aria-label="New price" style="width: 70px;">
+                                    <button class="btn btn-outline-primary btn-sm" type="submit">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <!-- Edit button -->
+                            <a href="{{ url_for('edit_book', isbn=book.isbn) }}" 
+                               class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            
+                            <!-- Delete button -->
+                            <form action="{{ url_for('delete_book', isbn=book.isbn) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger delete-book"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Delete book">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0"><strong>Total Books:</strong> {{ books|length }}</p>
+            <a href="{{ url_for('add_book') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Add New Book
+            </a>
+        </div>
+    </div>
+{% else %}
+    <!-- Empty state -->
+    <div class="empty-state">
+        <i class="fas fa-book-open"></i>
+        <h3>No Books Found</h3>
+        {% if search_term %}
+            <p>No books matching "{{ search_term }}" were found in the inventory.</p>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary mt-3">
+                <i class="fas fa-arrow-left me-1"></i> Back to All Books
+            </a>
+        {% else %}
+            <p>Your book inventory is empty. Start by adding some books.</p>
+            <a href="{{ url_for('add_book') }}" class="btn btn-primary mt-3">
+                <i class="fas fa-plus me-1"></i> Add Your First Book
+            </a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

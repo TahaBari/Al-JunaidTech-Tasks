@@ -1,0 +1,111 @@
+/* Custom styles for Book Management Website */
+
+/* Main layout adjustments */
+body {
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.book-card {
+    transition: transform 0.2s;
+    margin-bottom: 20px;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Book details styling */
+.book-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.genre-tag {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    background-color: var(--bs-secondary);
+    color: white;
+    display: inline-block;
+}
+
+/* Price display */
+.book-price {
+    font-weight: bold;
+    color: var(--bs-info);
+}
+
+/* Form styling */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.required-field::after {
+    content: "*";
+    color: var(--bs-danger);
+    margin-left: 3px;
+}
+
+/* Page header styling */
+.page-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--bs-secondary);
+    padding-bottom: 10px;
+}
+
+/* Empty state styling */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--bs-secondary);
+}
+
+.empty-state i {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+/* Alert container styling */
+#alerts-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 350px;
+}
+
+/* Table enhancements */
+.book-table th {
+    position: sticky;
+    top: 0;
+    background-color: var(--bs-dark);
+    z-index: 10;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+/* Search results highlight */
+.search-highlight {
+    background-color: rgba(var(--bs-warning-rgb), 0.2);
+    padding: 2px;
+    border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .book-table th, .book-table td {
+        padding: 0.5rem;
+    }
+}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Book - Book Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="page-header">
+            <i class="fas fa-edit me-2"></i> Edit Book
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url_for('edit_book', isbn=book.isbn) }}" method="POST">
+                    <div class="mb-3">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input type="text" class="form-control" id="isbn" value="{{ book.isbn }}" 
+                               readonly disabled>
+                        <div class="form-text">ISBN cannot be changed. Add a new book if you need a different ISBN.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="title" class="form-label required-field">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               placeholder="Book title" value="{{ book.title }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="author" class="form-label required-field">Author</label>
+                        <input type="text" class="form-control" id="author" name="author" 
+                               placeholder="Book author" value="{{ book.author }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="price" class="form-label required-field">Price ($)</label>
+                        <input type="number" class="form-control" id="price" name="price" 
+                               placeholder="Book price" step="0.01" min="0" 
+                               value="{{ "%.2f"|format(book.price) }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="genres" class="form-label">Genres</label>
+                        <input type="text" class="form-control" id="genres" name="genres" 
+                               placeholder="fiction, fantasy, adventure" value="{{ book.genres }}">
+                        <div class="form-text">Enter genres separated by commas. Genres will be standardized (lowercase, trimmed).</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Update Book
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-center mt-4">
+            <form action="{{ url_for('delete_book', isbn=book.isbn) }}" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger delete-book">
+                    <i class="fas fa-trash me-1"></i> Delete Book
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Book - Book Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="page-header">
+            <i class="fas fa-plus me-2"></i> Add New Book
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url_for('add_book') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="isbn" class="form-label required-field">ISBN</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn" 
+                               placeholder="e.g., 9780553213119" required
+                               pattern="\d{10}|\d{13}" 
+                               title="ISBN must be 10 or 13 digits">
+                        <div class="form-text">Enter the 10 or 13 digit ISBN without dashes.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="title" class="form-label required-field">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               placeholder="Book title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="author" class="form-label required-field">Author</label>
+                        <input type="text" class="form-control" id="author" name="author" 
+                               placeholder="Book author" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="price" class="form-label required-field">Price ($)</label>
+                        <input type="number" class="form-control" id="price" name="price" 
+                               placeholder="Book price" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="genres" class="form-label">Genres</label>
+                        <input type="text" class="form-control" id="genres" name="genres" 
+                               placeholder="fiction, fantasy, adventure">
+                        <div class="form-text">Enter genres separated by commas. Genres will be standardized (lowercase, trimmed).</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Save Book
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-1"></i> Tips for Adding Books
+            </div>
+            <div class="card-body">
+                <ul class="mb-0">
+                    <li>ISBN must be 10 or 13 digits without dashes.</li>
+                    <li>Each ISBN must be unique in the inventory.</li>
+                    <li>Genres are optional but help with categorization.</li>
+                    <li>Price must be a positive number.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
